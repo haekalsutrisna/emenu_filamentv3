@@ -43,10 +43,15 @@ class ProductCategoryResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label('Nama Toko')
+                    ->hidden(fn()=>Auth::user()->role === 'store'),
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Nama Kategori'),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('user')
+                    ->relationship('user', 'name'),
             ])
             ->actions([
                 Tables\Actions\EditAction::make(),
