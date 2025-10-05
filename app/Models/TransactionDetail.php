@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class TransactionDetail extends Model
 {
+
+    use softDeletes;
+
     protected $fillable = [
         'transaction_id', 
         'product_id',
