@@ -31,7 +31,8 @@ class ProductCategoryResource extends Resource
                 Forms\Components\Select::make('user_id')
                     ->label('Toko')
                     ->relationship('user', 'name')
-                    ->required(),
+                    ->required()
+                    ->hidden(fn()=>Auth::user()->role === 'store'),
                 Forms\Components\TextInput::make('name')
                     ->label('Nama Kategori')
                     ->required(),
