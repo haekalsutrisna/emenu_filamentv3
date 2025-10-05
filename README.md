@@ -22,7 +22,7 @@ Pengunjung dapat melihat daftar menu, deskripsi, harga, dan melakukan pemesanan 
 
 | Komponen     | Teknologi                       |
 | ------------ | ------------------------------- |
-| Backend      | Laravel 10 / PHP 8.2            |
+| Backend      | Laravel 12 / PHP 8.2            |
 | Frontend     | Blade / TailwindCSS / Alpine.js |
 | Database     | MySQL 8.x                       |
 | Server Lokal | Laragon / XAMPP                 |
