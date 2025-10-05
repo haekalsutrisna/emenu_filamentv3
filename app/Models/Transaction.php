@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Transaction extends Model
 {
 
-    use softDeletes;
+    use SoftDeletes;
 
     protected $fillable = [
         'user_id', 
@@ -24,7 +25,7 @@ class Transaction extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function transactionDetails()
+    public function transactiondetails()
     {
         return $this->hasMany(TransactionDetail::class);
     }

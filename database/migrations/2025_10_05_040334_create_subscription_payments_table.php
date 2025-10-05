@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('subscription_id')->constrained()->onDelete('cascade');
             $table->string('proof');
-            $table->enum('status', ['pending', 'success','failed'])->default(false);
+            $table->enum('status', ['pending', 'success','failed']);
             $table->softDeletes();
             $table->timestamps();
         });

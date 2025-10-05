@@ -17,9 +17,9 @@ return new class extends Migration
             $table->string('code')->unique();
             $table->string('name');
             $table->integer('table_number');
-            $table->string('payment_method',['cash','midtrans']);
+            $table->enum('payment_method',['cash','midtrans']);
             $table->decimal('total_price', 10,2);
-            $table->enum('status', ['pending','succes','failed']);
+            $table->enum('status', ['pending','success','failed']);
             $table->softDeletes();
             $table->timestamps();
         });
