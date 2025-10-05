@@ -12,4 +12,9 @@ class TransactionDetail extends Model
         'quantity',
         'note'
     ];
+
+    public function transaction()
+    {
+        return $this->belongsTo(Transaction::class);
+    }   
 }
