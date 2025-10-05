@@ -19,10 +19,40 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationLabel = 'Manajemen User';
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
+                Forms\Components\FileUpload::make('logo')
+                    ->label('Logo Toko')
+                    ->image()
+                    ->nullable(), 
+                Forms\Components\TextInput::make('name')
+                    ->label('Nama Toko')
+                    ->required(),
+                Forms\Components\TextInput::make('username')
+                    ->label('Username')
+                    ->hint('Minimal 5 Karakter, tidak boleh ada spasi')
+                    ->minLength(5)
+                    ->unique(User::class, 'username')
+                    ->required(),
+                Forms\Components\TextInput::make('email')
+                    ->label('Label')
+                    ->email()
+                    ->required(),
+                Forms\Components\TextInput::make('password')
+                    ->label('Password')
+                    ->password()
+                    ->required(),
+                Forms\Components\Select::make('role')
+                    ->options([
+                        'admin' => 'Admin',
+                        'store' => 'Toko',
+                    ])
+                    ->required(),
+
                 //
             ]);
     }
@@ -61,4 +91,6 @@ class UserResource extends Resource
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
+
+
 }
