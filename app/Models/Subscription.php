@@ -13,4 +13,9 @@ class Subscription extends Model
         'is_active',
         'plan',
     ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
