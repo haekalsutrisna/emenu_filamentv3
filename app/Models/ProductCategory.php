@@ -9,5 +9,11 @@ class ProductCategory extends Model
     protected $fillable = [
         'user_id', 
         'name',
-        'slug'];
+        'slug'
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }
