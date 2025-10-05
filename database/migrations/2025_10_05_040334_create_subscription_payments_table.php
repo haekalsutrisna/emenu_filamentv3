@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('subscription_payments', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('subscription_id')->constrained()->onDelete('cascade');
+            $table->string('proof');
+            $table->enum('status', ['pending', 'success','failed'])->default(false);
             $table->timestamps();
         });
     }
