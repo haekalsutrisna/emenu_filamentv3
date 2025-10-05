@@ -24,6 +24,17 @@ class ProductCategoryResource extends Resource
 
     protected static ?string $navigationGroup = 'Manajemen Menu';
 
+
+    public static function getElequentQuery(): Builder
+    {
+        $user = Auth::user();
+
+        if($user->role === 'admin') {
+            return parent::getEloquentQuery();
+        }
+        return parent::getEloquentQuery()->where('user_id', $user->id);
+    }
+
     public static function form(Form $form): Form
     {
         return $form
