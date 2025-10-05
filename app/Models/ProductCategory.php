@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class ProductCategory extends Model
 {
+
+    use softDeletes;
+
     protected $fillable = [
         'user_id', 
         'name',
