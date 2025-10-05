@@ -16,6 +16,19 @@ class ProductCategory extends Model
         'slug'
     ];
 
+    public function boot(){
+
+        parent::boo();
+
+        static::creating(function ($model) {
+            if(Auth::user()->role === 'store') {
+                $model->user_id = Auth::user()->id;
+            }
+
+            $model->slug = Str::slug($model->name);
+        });
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);

@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class ProductCategoryResource extends Resource
 {
@@ -19,11 +20,21 @@ class ProductCategoryResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
+    protected static ?string $navigationLabel = 'Manajemen Kategori Produk';
+
+    protected static ?string $navigationGorup = 'Manajemen Menu';
+
     public static function form(Form $form): Form
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Select::make('user_id')
+                    ->label('Toko')
+                    ->relationship('user', 'name')
+                    ->required(),
+                Forms\Components\TextInput::make('name')
+                    ->label('Nama Kategori')
+                    ->required(),
             ]);
     }
 
