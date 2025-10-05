@@ -14,4 +14,18 @@ class Product extends Model
         'description',
         'price'
     ];
+
+    protected $casts = [
+        'price' => 'decimal:2',
+    ];
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public function productCategory()
+    {
+        return $this->belongsTo(ProductCategory::class);
+    }
 };
