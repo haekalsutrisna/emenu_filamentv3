@@ -13,4 +13,9 @@ class SubscriptionPayment extends Model
         'proof',
         'status'
     ];
+
+    public function subscription()
+    {
+        return $this->belongsTo(Subscription::class);
+    }
 }
