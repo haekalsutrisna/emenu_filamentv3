@@ -12,6 +12,13 @@ class AdminSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        User::create([
+            'logo'=> 'default.jpg',
+            'name'=> 'Admin Emenu',
+            'username'=> 'admin',
+            'email'=> 'admin@emenu.com',
+            'password'=> bcrypt('123'),
+            'role'=> 'admin'
+        ]);
     }
 }
