@@ -90,7 +90,7 @@ class ProductResource extends Resource
                 Tables\Columns\TextColumn::make('price')
                     ->label('Harga Menu')
                     ->formatStateUsing(function ($state) {
-                        return 'Rp ' . number_format($state, 2, ',', '.');
+                        return 'Rp ' . number_format($state);
                     }),
                 
             ])
@@ -98,11 +98,13 @@ class ProductResource extends Resource
                 //
             ])
             ->actions([
+                Tables\Actions\ViewtAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
+                Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
