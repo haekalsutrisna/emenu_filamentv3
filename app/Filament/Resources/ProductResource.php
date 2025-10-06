@@ -33,6 +33,7 @@ class ProductResource extends Resource
                     ->required()
                     ->reactive()
                     ->hidden(fn()=>auth()->user()->role === 'store'),
+                Forms\Components\Select::make('product_category_id')
             ]);
     }
 
