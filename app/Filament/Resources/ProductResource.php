@@ -50,6 +50,15 @@ class ProductResource extends Resource
                             ->pluck('name', 'id');
                     })
                     ->hidden(fn() => Auth::user()->role === 'store'),
+                Forms\Components\Select::make('product_category_id')
+                    ->label('Kategori Produk')
+                    ->relationship('productCategory', 'name')
+                    ->disabled(fn(callable $get)=>$get('user_id') === null)
+                    ->options(function (callable $get) {
+                        return ProductCategory::where('user_id', Auth::user()->id)
+                            ->pluck('name', 'id');
+                    })
+                    ->hidden(fn() => Auth::user()->role === 'store'),
             ]);
     }
 
