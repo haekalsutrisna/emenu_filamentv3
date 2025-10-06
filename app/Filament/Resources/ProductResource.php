@@ -39,15 +39,16 @@ class ProductResource extends Resource
                     ->relationship('productCategory', 'name')
                     ->disabled(fn(callable $get)=>$get('user_id') === null)
                     ->options(function (callable $get) {
-                        $user_id = $get('user_id');
+                        $userId = $get('user_id');
 
-                        if ($user_id) {
+                        if (!$userId) {
                             return [];
                         }
 
-                        return ProductCategory::where('user_id', $user_id)->pluck('name', 'id');
+                        return ProductCategory::where('user_id', $userId)
+                            ->pluck('name', 'id');
                     })
-                    ->hidden(fn()=>Auth::user()->role === 'store'),
+                    ->hidden(fn() => Auth::user()->role === 'store'),
             ]);
     }
 
