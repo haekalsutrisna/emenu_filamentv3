@@ -27,7 +27,12 @@ class ProductResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Select::make('user_id')
+                    ->label('Toko')
+                    ->relationship('user', 'name')
+                    ->required()
+                    ->reactive()
+                    ->hidden(fn()=>auth()->user()->role === 'store'),
             ]);
     }
 
