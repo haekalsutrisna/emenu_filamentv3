@@ -80,7 +80,19 @@ class ProductResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label('Nama Toko')
+                    ->hidden(fn()=>Auth::user()->role === 'store'),
+                Tables\Columns\TextColumn::make('productCategory.name')
+                    ->label('Kategori Menu'),
+                Tables\Columns\ImageColumn::make('image')
+                    ->label('Foto Menu'),
+                Tables\Columns\TextColumn::make('price')
+                    ->label('Harga Menu')
+                    ->formatStateUsing(function ($state) {
+                        return 'Rp ' . number_format($state, 2, ',', '.');
+                    }),
+                
             ])
             ->filters([
                 //
