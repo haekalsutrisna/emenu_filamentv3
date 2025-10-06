@@ -95,7 +95,7 @@ class ProductResource extends Resource
                 
             ])
             ->filters([
-                //
+                
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),

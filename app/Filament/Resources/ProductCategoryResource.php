@@ -67,7 +67,9 @@ class ProductCategoryResource extends Resource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('user')
-                    ->relationship('user', 'name'),
+                    ->relationship('user', 'name')
+                    ->label('Toko')
+                    ->hidden(fn()=>Auth::user()->role === 'store'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
