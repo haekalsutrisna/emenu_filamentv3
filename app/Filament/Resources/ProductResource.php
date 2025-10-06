@@ -58,6 +58,21 @@ class ProductResource extends Resource
                             ->pluck('name', 'id');
                     })
                     ->hidden(fn() => Auth::user()->role === 'admin'),
+                Forms\Components\FileUpload::make('image')
+                    ->label('Foto Menu')
+                    ->image()
+                    ->required()
+                    ->reactive(),
+                Forms\Components\TextInput::make('name')
+                    ->label('Nama Menu')
+                    ->required(),
+                Forms\Components\TextInput::make('descpription')
+                    ->label('Deskripsi Menu')
+                    ->required(),
+                Forms\Components\TextInput::make('price')
+                    ->label('Harga Menu')
+                    ->numeric()
+                    ->required(),
             ]);
     }
 
