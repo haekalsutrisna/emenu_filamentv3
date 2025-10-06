@@ -111,7 +111,12 @@ class ProductResource extends Resource
                     ->hidden(fn()=>Auth::user()->role === 'store'),
                 Tables\Filters\SelectFilter::make('product_category_id')
                     ->relationship('productCategory', 'name')
-                    ->label('Kategori Menu'),
+                    ->label('Kategori Menu')
+                    ->options(function (callable $get) {
+                        return ProductCategory::where('user_id', Auth::user()->id)
+                            ->pluck('name', 'id');
+                    })
+                    ->hidden(fn()=>Auth::user()->role === 'admin'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
