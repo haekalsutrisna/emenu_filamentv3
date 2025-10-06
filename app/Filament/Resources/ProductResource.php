@@ -38,7 +38,7 @@ class ProductResource extends Resource
                     ->label('Kategori Produk')
                     ->relationship('productCategory', 'name')
                     ->disabled(fn(callable $get)=>$get('user_id') === null)
-                    ->option(function (callable $get) {
+                    ->options(function (callable $get) {
                         $user_id = $get('user_id');
 
                         if ($user_id) {
@@ -47,7 +47,7 @@ class ProductResource extends Resource
 
                         return ProductCategory::where('user_id', $user_id)->pluck('name', 'id');
                     })
-                    ->hidden(fn()=>Auth::user()->user()->role === 'store'),
+                    ->hidden(fn()=>Auth::user()->role === 'store'),
             ]);
     }
 
