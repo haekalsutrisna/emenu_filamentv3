@@ -25,6 +25,16 @@ class ProductResource extends Resource
 
     protected static ?string $navigationGroup = 'Manajemen Menu';
 
+    public static function getElequentQuery(): Builder
+    {
+        $user = Auth::user();
+
+        if($user->role === 'admin') {
+            return parent::getEloquentQuery();
+        }
+        return parent::getEloquentQuery()->where('user_id', $user->id);
+    }
+
     public static function form(Form $form): Form
     {
         return $form
@@ -95,7 +105,13 @@ class ProductResource extends Resource
                 
             ])
             ->filters([
-                
+                Tables\Filters\SelectFilter::make('user')
+                    ->relationship('user', 'name')
+                    ->label('Toko')
+                    ->hidden(fn()=>Auth::user()->role === 'store'),
+                Tables\Filters\SelectFilter::make('product_category_id')
+                    ->relationship('productCategory', 'name')
+                    ->label('Kategori Menu'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
