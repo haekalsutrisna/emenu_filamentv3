@@ -34,6 +34,19 @@ class ProductResource extends Resource
                     ->reactive()
                     ->hidden(fn()=>auth()->user()->role === 'store'),
                 Forms\Components\Select::make('product_category_id')
+                    ->label('Kategori Produk')
+                    ->relationship('productCategory', 'name')
+                    ->disabled(fn(callable $get)=>$get('user_id') === null)
+                    ->option(function (callable $get) {
+                        $user_id = $get('user_id');
+
+                        if ($user_id) {
+                            return [];
+                        }
+
+                        return ProductCategory::where('user_id', $user_id)->pluck('name', 'id');
+                    })
+                    ->hidden(fn()=>Auth::user()->user()->role === 'store'),
             ]);
     }
 
