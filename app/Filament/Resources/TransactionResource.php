@@ -48,7 +48,7 @@ class TransactionResource extends Resource
                     ->options(['cash'=>'Tunai','midtrans'=>'Midtrans'])
                     ->required(),
                 Forms\Components\Select::make('status')
-                    ->label('Label Pembayaran')
+                    ->label('Status Pembayaran')
                     ->options(['pending'=>'Tertunda','success'=>'Berhasil','failed'=>'Gagal'])
                     ->required(),
             ]);
