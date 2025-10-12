@@ -37,6 +37,20 @@ class TransactionResource extends Resource
                     ->default(fn()=> 'TRX-'. mt_rand(1000,9999))
                     ->readOnly()
                     ->required(),
+                Forms\Components\TextInput::make('name')
+                    ->label('Nama Customer')
+                    ->required(),
+                Forms\Components\TextInput::make('table_number')
+                    ->label('Nomer Meja')
+                    ->required(),
+                Forms\Components\Select::make('payment_method')
+                    ->label('Metode Pembayaran')
+                    ->options(['cash'=>'Tunai','midtrans'=>'Midtrans'])
+                    ->required(),
+                Forms\Components\Select::make('status')
+                    ->label('Label Pembayaran')
+                    ->options(['pending'=>'Tertunda','success'=>'Berhasil','failed'=>'Gagal'])
+                    ->required(),
             ]);
     }
 
