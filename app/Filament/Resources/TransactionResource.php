@@ -26,7 +26,17 @@ class TransactionResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Select::make('user_id')
+                    ->label('Toko')
+                    ->relationship('user', 'name')
+                    ->required()
+                    ->reactive()
+                    ->hidden(fn()=>auth()->user()->role === 'store'),
+                Forms\Components\TextInput::make('code')
+                    ->label('Kode transaksi')
+                    ->default(fn()=> 'TRX-'. mt_rand(1000,9999))
+                    ->readOnly()
+                    ->required(),
             ]);
     }
 
@@ -34,12 +44,7 @@ class TransactionResource extends Resource
     {
         return $table
             ->columns([
-                Forms\Components\Select::make('user_id')
-                    ->label('Toko')
-                    ->relationship('user', 'name')
-                    ->required()
-                    ->reactive()
-                    ->hidden(fn()=>auth()->user()->role === 'store'),
+
             ])
             ->filters([
                 //
