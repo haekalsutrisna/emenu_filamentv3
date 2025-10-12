@@ -110,13 +110,15 @@ class ProductResource extends Resource
                     ->label('Toko')
                     ->hidden(fn()=>Auth::user()->role === 'store'),
                 Tables\Filters\SelectFilter::make('product_category_id')
-                    ->relationship('productCategory', 'name')
-                    ->label('Kategori Menu')
-                    ->options(function (callable $get) {
-                        return ProductCategory::where('user_id', Auth::user()->id)
-                            ->pluck('name', 'id');
+                    ->options(function () {
+                       if (Auth::user()->role === 'admin') {
+                        return ProductCategory::pluck('name','id');
+                       }
+
+                       return ProductCategory::where('user_id', Auth::user()->id)
+                            ->pluck('name','id');
                     })
-                    ->hidden(fn()=>Auth::user()->role === 'admin'),
+                    ->label('Kategori Menu'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
