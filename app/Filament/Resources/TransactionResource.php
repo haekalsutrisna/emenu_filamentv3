@@ -51,7 +51,27 @@ class TransactionResource extends Resource
                     ->label('Status Pembayaran')
                     ->options(['pending'=>'Tertunda','success'=>'Berhasil','failed'=>'Gagal'])
                     ->required(),
+                Forms\Components\Repeater::make('transactionDetails')
+                    ->relationship() // biarkan kosong jika relasi sudah di model
+                    ->schema([
+                Forms\Components\Select::make('product_id')
+                            ->label('Produk')
+                            ->options(function () {
+                                // Jika ingin ambil semua produk:
+                                return Product::all()->mapWithKeys(function ($product) {
+                                    return [
+                                        $product->id => $product->name . ' (Rp ' . number_format($product->price) . ')'
+                                    ];
+                                });
+  
+                            })
+                            ->searchable()
+                            ->required(),
+
+                    ])
+                    
             ]);
+                
     }
 
     public static function table(Table $table): Table
