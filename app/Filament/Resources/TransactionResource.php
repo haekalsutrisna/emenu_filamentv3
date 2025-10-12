@@ -17,7 +17,10 @@ class TransactionResource extends Resource
 {
     protected static ?string $model = Transaction::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
+
+    protected static ?string $navigationLabel = 'Manajemen Transaksi';
+
 
     public static function form(Form $form): Form
     {
@@ -31,7 +34,12 @@ class TransactionResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Forms\Components\Select::make('user_id')
+                    ->label('Toko')
+                    ->relationship('user', 'name')
+                    ->required()
+                    ->reactive()
+                    ->hidden(fn()=>auth()->user()->role === 'store'),
             ])
             ->filters([
                 //
