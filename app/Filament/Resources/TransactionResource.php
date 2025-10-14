@@ -90,9 +90,8 @@ class TransactionResource extends Resource
                     })
                     ->reorderable(false),
                 Forms\Components\TextInput::make('total_price')
-                    ->label('Total Harga (Rp)')
-                    ->readOnly()
-                    ->required(),
+                    ->required()
+                    ->readOnly(),
                     
             ]);
                 
