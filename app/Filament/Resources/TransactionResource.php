@@ -114,15 +114,25 @@ class TransactionResource extends Resource
                     ->label('Nomor Meja'),
                 Tables\Columns\TextColumn::make('payment_method')
                     ->label('Metode Pembayaran'),
-                    Tables\Columns\TextColumn::make('total_price')
-                    ->label('Total Pembayaran'),
+                Tables\Columns\TextColumn::make('total_price')
+                    ->label('Total Pembayaran')
+                    ->formatStateUsing(function ($state) {
+                        return 'Rp ' . number_format($state);
+                    }),
+                Tables\Columns\TextColumn::make('status')
+                    ->label('Status Pembayaran'),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->label('Tanggal Transaksi')
+                    ->dateTime(),
 
             ])
             ->filters([
                 //
             ])
             ->actions([
+                Tables\Actions\ViewAction::make(),
                 Tables\Actions\EditAction::make(),
+                Tables\Actions\DeleteAction::make(),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
