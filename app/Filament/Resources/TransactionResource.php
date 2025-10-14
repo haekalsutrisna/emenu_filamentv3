@@ -110,10 +110,12 @@ class TransactionResource extends Resource
                     ->label('Kode Transaksi'),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nama Customer'),
-                Tables\Columns\ImageColumn::make('table_number')
+                Tables\Columns\TextColumn::make('table_number')
                     ->label('Nomor Meja'),
-                Tables\Columns\ImageColumn::make('payment_method')
+                Tables\Columns\TextColumn::make('payment_method')
                     ->label('Metode Pembayaran'),
+                    Tables\Columns\TextColumn::make('total_price')
+                    ->label('Total Pembayaran'),
 
             ])
             ->filters([
