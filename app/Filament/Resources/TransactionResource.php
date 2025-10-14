@@ -136,5 +136,7 @@ class TransactionResource extends Resource
     public static function updateTotals(Get $get, Set $set): void
     {
         $selectedProducts = colect($get('transactionDetails'))->filter(fn($item) => !empty($item['product_id']) && !empty($item['quantity']));
+
+        $prices = Product::find($selectedProducts->pluck('product_id')->toArray())->pluck('price', 'id');
     }
 }
