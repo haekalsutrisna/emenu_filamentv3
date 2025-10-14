@@ -75,8 +75,15 @@ class TransactionResource extends Resource
   
                             })
                             ->required(),
-
-                    ])
+                        Forms\Components\TextInput::make('quantity')
+                            ->label('Kuantitas')
+                            ->numeric()
+                            ->required()
+                            ->minValue(1)
+                            ->default(1),
+                        Forms\Components\TextInput::make('note')
+                            ->label('Note'),
+                    ])->columnSpanFull()
                     
             ]);
                 
