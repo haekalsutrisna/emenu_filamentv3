@@ -20,6 +20,27 @@ class Transaction extends Model
         'status'
     ];
 
+    public static function boot(){
+
+        parent::boot();
+
+        static::creating(function ($model) {
+            if(Auth::user()->role === 'store') {
+                $model->user_id = Auth::user()->id;
+            }
+
+            $model->slug = Str::slug($model->name);
+        });
+
+        static::updating(function ($model) {
+            if(Auth::user()->role === 'store') {
+                $model->user_id = Auth::user()->id;
+            }
+
+            $model->slug = Str::slug($model->name);
+        });
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
