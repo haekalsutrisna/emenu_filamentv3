@@ -138,5 +138,9 @@ class TransactionResource extends Resource
         $selectedProducts = colect($get('transactionDetails'))->filter(fn($item) => !empty($item['product_id']) && !empty($item['quantity']));
 
         $prices = Product::find($selectedProducts->pluck('product_id')->toArray())->pluck('price', 'id');
+
+        $total = $selectedProducts->reduce(function ($carry, $item) use ($prices) {
+            return $carry + ($prices[$item['product_id']] * $item['quantity']);
+        }, 0);
     }
 }
