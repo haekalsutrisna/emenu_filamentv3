@@ -58,6 +58,13 @@ class TransactionResource extends Resource
                             ->label('Produk')
                             ->options(function () {
                                 // Jika ingin ambil semua produk:
+                                if (Auth::user()->role === 'admin') {
+                                    return Product::all()->mapWithKeys(function ($product) {
+                                        return [
+                                            $product->id => $product->name . ' (Rp ' . number_format($product->price) . ')'
+                                        ];
+                                    });
+                                }
                                 return Product::all()->mapWithKeys(function ($product) {
                                     return [
                                         $product->id => $product->name . ' (Rp ' . number_format($product->price) . ')'
@@ -65,7 +72,6 @@ class TransactionResource extends Resource
                                 });
   
                             })
-                            ->searchable()
                             ->required(),
 
                     ])
