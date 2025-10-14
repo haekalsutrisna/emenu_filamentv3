@@ -109,9 +109,9 @@ class TransactionResource extends Resource
                 Tables\Columns\TextColumn::make('code')
                     ->label('Kode Transaksi'),
                 Tables\Columns\TextColumn::make('name')
-                    ->label('Nama Menu'),
-                Tables\Columns\ImageColumn::make('image')
-                    ->label('Foto Menu'),
+                    ->label('Nama Customer'),
+                Tables\Columns\ImageColumn::make('table_number')
+                    ->label('Nomor Meja'),
 
             ])
             ->filters([
