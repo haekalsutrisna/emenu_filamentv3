@@ -87,7 +87,8 @@ class TransactionResource extends Resource
                     ->live()
                     ->afterStateUpdated(function (Get $get, Set $set) {
                         self::updateTotalPrice($get, $set);
-                    }
+                    })
+                    ->reorderable(false)
                 Forms\Components\TextInput::make('total_price')
                     ->label('Total Harga (Rp)')
                     ->readOnly()
