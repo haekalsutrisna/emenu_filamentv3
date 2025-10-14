@@ -142,5 +142,7 @@ class TransactionResource extends Resource
         $total = $selectedProducts->reduce(function ($carry, $item) use ($prices) {
             return $carry + ($prices[$item['product_id']] * $item['quantity']);
         }, 0);
+
+        $set('total_price', (string) $total);
     }
 }
