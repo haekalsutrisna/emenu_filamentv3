@@ -14,6 +14,8 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 
 class TransactionResource extends Resource
 {
@@ -134,7 +136,7 @@ class TransactionResource extends Resource
 
     public static function updateTotals(Get $get, Set $set): void
     {
-        $selectedProducts = colect($get('transactionDetails'))->filter(fn($item) => !empty($item['product_id']) && !empty($item['quantity']));
+        $selectedProducts = collect($get('transactionDetails'))->filter(fn($item) => !empty($item['product_id']) && !empty($item['quantity']));
 
         $prices = Product::find($selectedProducts->pluck('product_id')->toArray())->pluck('price', 'id');
 
