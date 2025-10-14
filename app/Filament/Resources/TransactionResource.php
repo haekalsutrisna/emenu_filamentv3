@@ -54,9 +54,9 @@ class TransactionResource extends Resource
                 Forms\Components\Repeater::make('transactionDetails')
                     ->relationship() // biarkan kosong jika relasi sudah di model
                     ->schema([
-                Forms\Components\Select::make('product_id')
-                            ->label('Produk')
-                            ->options(function () {
+                        Forms\Components\Select::make('product_id')
+                            ->relationship('product','name')
+                            ->options(function (callable $get) {
                                 // Jika ingin ambil semua produk:
                                 if (Auth::user()->role === 'admin') {
                                     return Product::all()->mapWithKeys(function ($product) {
