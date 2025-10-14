@@ -84,6 +84,14 @@ class TransactionResource extends Resource
                         Forms\Components\TextInput::make('note')
                             ->label('Note'),
                     ])->columnSpanFull()
+                    ->live()
+                    ->afterStateUpdated(function (Get $get, Set $set) {
+                        self::updateTotalPrice($get, $set);
+                    }
+                Forms\Components\TextInput::make('total_price')
+                    ->label('Total Harga (Rp)')
+                    ->readOnly()
+                    ->required(),
                     
             ]);
                 
