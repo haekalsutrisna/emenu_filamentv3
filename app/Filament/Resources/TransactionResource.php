@@ -86,7 +86,7 @@ class TransactionResource extends Resource
                     ])->columnSpanFull()
                     ->live()
                     ->afterStateUpdated(function (Get $get, Set $set) {
-                        self::updateTotalPrice($get, $set);
+                        self::updateTotals($get, $set);
                     })
                     ->reorderable(false),
                 Forms\Components\TextInput::make('total_price')
