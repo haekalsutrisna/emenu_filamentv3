@@ -95,8 +95,8 @@ class ProductResource extends Resource
                     ->hidden(fn()=>Auth::user()->role === 'store'),
                 Tables\Columns\TextColumn::make('productCategory.name')
                     ->label('Kategori Menu'),
-                Tables\Columns\TextColumn::make('productCategory.name')
-                    ->label('Kategori Menu'),
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Nama Menu'),
                 Tables\Columns\ImageColumn::make('image')
                     ->label('Foto Menu'),
                 Tables\Columns\TextColumn::make('price')
