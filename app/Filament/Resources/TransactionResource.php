@@ -112,6 +112,8 @@ class TransactionResource extends Resource
                     ->label('Nama Customer'),
                 Tables\Columns\ImageColumn::make('table_number')
                     ->label('Nomor Meja'),
+                Tables\Columns\ImageColumn::make('payment_method')
+                    ->label('Metode Pembayaran'),
 
             ])
             ->filters([
