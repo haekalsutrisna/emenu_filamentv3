@@ -31,7 +31,6 @@ class Transaction extends Model
                 $model->user_id = Auth::user()->id;
             }
 
-            $model->slug = Str::slug($model->name);
         });
 
         static::updating(function ($model) {
@@ -39,7 +38,6 @@ class Transaction extends Model
                 $model->user_id = Auth::user()->id;
             }
 
-            $model->slug = Str::slug($model->name);
         });
     }
 
