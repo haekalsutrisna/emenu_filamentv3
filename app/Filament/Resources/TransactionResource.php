@@ -103,6 +103,15 @@ class TransactionResource extends Resource
     {
         return $table
             ->columns([
+                Tables\Columns\TextColumn::make('user.name')
+                    ->label('Nama Toko')
+                    ->hidden(fn()=>Auth::user()->role === 'store'),
+                Tables\Columns\TextColumn::make('code')
+                    ->label('Kode Transaksi'),
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Nama Menu'),
+                Tables\Columns\ImageColumn::make('image')
+                    ->label('Foto Menu'),
 
             ])
             ->filters([
