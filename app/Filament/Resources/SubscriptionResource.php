@@ -12,6 +12,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Illuminate\Support\Facades\Auth;
 
 class SubscriptionResource extends Resource
 {
@@ -23,7 +24,34 @@ class SubscriptionResource extends Resource
     {
         return $form
             ->schema([
-                //
+                Forms\Components\Select::make('user_id')
+                    ->options(User::all()->pluck('name', 'id')->toArray())
+                    ->required()
+                    ->hidden(fn()=> Auth::user()->hasRole('store')),   
+                Forms\Components\Toogle::make('is_active')
+                    ->required()
+                    ->hidden(fn()=> Auth::user()->hasRole('store')),  
+                Forms\Components\Repeater::make('subscriptionPayment')
+                    ->relationship()
+                    ->schema([
+                        Forms\Components\FileUpload::make('proof')
+                            ->label('Bukti Transfer Ke Rekening 21321312312 (BA)A/N Rafli Sebesar Rp. 50.800')
+                            ->required()
+                            ->columnSpanFull(),
+                        Forms\Components\Select::make('status')
+                            ->options([
+                                'pending'=>'Tertunda',
+                                'success'=>'Berhasil',
+                                'failed'=>'Gagal'
+                            ])
+                            ->required()
+                            ->label('Payment Status')
+                            ->columnSpanFull()
+                            ->hidden(fn()=> Auth::user()->hasRole('store')),
+
+                    ]) 
+                    ->columnSpanFull()
+                    ->addable(false)
             ]);
     }
 
