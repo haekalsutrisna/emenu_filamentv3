@@ -3,8 +3,11 @@
 namespace App\Filament\Resources\ProductResource\Pages;
 
 use App\Filament\Resources\ProductResource;
+use App\Models\Product;
+use App\Models\Subscription;
 use Filament\Actions;
 use Filament\Resources\Pages\ListRecords;
+use Illuminate\Support\Facades\Auth;
 
 class ListProducts extends ListRecords
 {
@@ -31,7 +34,7 @@ class ListProducts extends ListRecords
                 ->label('Produk Kamu Melebihi Batas Penggunaan Gratis, Silahkan Berlangganan')
                 ->color('danger')
                 ->icon('heroicon-s-exclamation-triangle')
-                ->visible(!$subcription && $countProduct >= 5),
+                ->visible(!$subcription && $countProduct >= 1),
             Actions\CreateAction::make(),
         ];
     }
