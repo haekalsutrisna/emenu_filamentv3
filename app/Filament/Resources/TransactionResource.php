@@ -44,7 +44,9 @@ class TransactionResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->label('Nama Customer')
                     ->required(),
-                
+                Forms\Components\TextInput::make('phone_number')
+                    ->label('Nomor HP Customer')
+                    ->required(),                
                 Forms\Components\TextInput::make('table_number')
                     ->label('Nomer Meja')
                     ->required(),
