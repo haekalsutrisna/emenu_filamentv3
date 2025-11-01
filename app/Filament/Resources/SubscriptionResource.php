@@ -59,7 +59,19 @@ class SubscriptionResource extends Resource
     {
         return $table
             ->columns([
-                //
+                Tables\Columns\TextColumn::make('user.name' )
+                    ->label('Nama Toko')
+                    ->hidden(fn()=> Auth::user()->role == 'store'),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->label('Tanggal Mulai'),
+                Tables\Columns\TextColumn::make('end_date')
+                    ->dateTime()
+                    ->label('Tanggal Berakhir'),
+                Tables\Columns\ImageColumn::make('subscriptionPayment.proof')
+                    ->label('Bukti Pembayaran'),
+                Tables\Columns\TextColumn::make('subscriptionPayment.status')
+                    ->label('Status Pembayaran'),
             ])
             ->filters([
                 //
