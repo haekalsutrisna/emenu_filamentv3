@@ -18,7 +18,17 @@ class SubscriptionResource extends Resource
 {
     protected static ?string $model = Subscription::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-banknotes';
+
+    public static function getElequentQuery(): Builder
+    {
+        $user = Auth::user();
+
+        if($user->role === 'admin') {
+            return parent::getEloquentQuery();
+        }
+        return parent::getEloquentQuery()->where('user_id', $user->id);
+    }
 
     public static function form(Form $form): Form
     {
