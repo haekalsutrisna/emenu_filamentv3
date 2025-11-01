@@ -6,6 +6,7 @@ use App\Filament\Resources\ProductResource\Pages;
 use App\Filament\Resources\ProductResource\RelationManagers;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Models\Subscription;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -25,17 +26,17 @@ class ProductResource extends Resource
 
     protected static ?string $navigationGroup = 'Manajemen Menu';
 
-    public static function getElequentQuery(): Builder
+    public static function getEloquentQuery(): Builder
     {
         $user = Auth::user();
 
-        if($user->role === 'admin') {
+        if ($user->role === 'admin') {
             return parent::getEloquentQuery();
         }
+
         return parent::getEloquentQuery()->where('user_id', $user->id);
     }
 
-    
     public static function canCreate(): bool
     {
         if (Auth::user()->role === 'admin') {
@@ -50,7 +51,7 @@ class ProductResource extends Resource
 
         $countProduct = Product::where('user_id', Auth::user()->id)->count();
 
-        return !($countProduct >= 5 && !$subcription);
+        return !($countProduct >= 1 && !$subcription);
     }
 
     public static function form(Form $form): Form
@@ -62,11 +63,12 @@ class ProductResource extends Resource
                     ->relationship('user', 'name')
                     ->required()
                     ->reactive()
-                    ->hidden(fn()=>auth()->user()->role === 'store'),
+                    ->hidden(fn() => Auth::user()->role === 'store'),
                 Forms\Components\Select::make('product_category_id')
                     ->label('Kategori Produk')
+                    ->required()
                     ->relationship('productCategory', 'name')
-                    ->disabled(fn(callable $get)=>$get('user_id') === null)
+                    ->disabled(fn(callable $get) => $get('user_id') == null)
                     ->options(function (callable $get) {
                         $userId = $get('user_id');
 
@@ -80,6 +82,7 @@ class ProductResource extends Resource
                     ->hidden(fn() => Auth::user()->role === 'store'),
                 Forms\Components\Select::make('product_category_id')
                     ->label('Kategori Produk')
+                    ->required()
                     ->relationship('productCategory', 'name')
                     ->options(function (callable $get) {
                         return ProductCategory::where('user_id', Auth::user()->id)
@@ -89,18 +92,32 @@ class ProductResource extends Resource
                 Forms\Components\FileUpload::make('image')
                     ->label('Foto Menu')
                     ->image()
-                    ->required()
-                    ->reactive(),
+                    ->required(),
                 Forms\Components\TextInput::make('name')
                     ->label('Nama Menu')
                     ->required(),
-                Forms\Components\TextInput::make('description')
+                Forms\Components\TextArea::make('description')
                     ->label('Deskripsi Menu')
                     ->required(),
                 Forms\Components\TextInput::make('price')
                     ->label('Harga Menu')
                     ->numeric()
                     ->required(),
+                Forms\Components\TextInput::make('rating')
+                    ->label('Rating Menu')
+                    ->numeric()
+                    ->required(),
+                Forms\Components\Toggle::make('is_popular')
+                    ->label('Populer Menu')
+                    ->required(),
+                Forms\Components\Repeater::make('productIngredients')
+                    ->label('Bahan Baku Menu')
+                    ->relationship('productIngredients')
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->label('Nama Bahan')
+                            ->required(),
+                    ])->columnSpanFull()
             ]);
     }
 
@@ -110,33 +127,36 @@ class ProductResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Nama Toko')
-                    ->hidden(fn()=>Auth::user()->role === 'store'),
-                Tables\Columns\TextColumn::make('productCategory.name')
-                    ->label('Kategori Menu'),
+                    ->hidden(fn() => Auth::user()->role === 'store'),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nama Menu'),
+                Tables\Columns\TextColumn::make('productCategory.name')
+                    ->label('Kategori Menu'),
                 Tables\Columns\ImageColumn::make('image')
                     ->label('Foto Menu'),
                 Tables\Columns\TextColumn::make('price')
                     ->label('Harga Menu')
-                    ->formatStateUsing(function ($state) {
+                    ->formatStateUsing(function (string $state) {
                         return 'Rp ' . number_format($state);
                     }),
-                
+                Tables\Columns\TextColumn::make('rating')
+                    ->label('Rating Menu'),
+                Tables\Columns\ToggleColumn::make('is_popular')
+                    ->label('Populer Menu'),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('user')
                     ->relationship('user', 'name')
                     ->label('Toko')
-                    ->hidden(fn()=>Auth::user()->role === 'store'),
+                    ->hidden(fn() => Auth::user()->role === 'store'),
                 Tables\Filters\SelectFilter::make('product_category_id')
                     ->options(function () {
-                       if (Auth::user()->role === 'admin') {
-                        return ProductCategory::pluck('name','id');
-                       }
+                        if (Auth::user()->role === 'admin') {
+                            return ProductCategory::pluck('name', 'id');
+                        }
 
-                       return ProductCategory::where('user_id', Auth::user()->id)
-                            ->pluck('name','id');
+                        return ProductCategory::where('user_id', Auth::user()->id)
+                            ->pluck('name', 'id');
                     })
                     ->label('Kategori Menu'),
             ])
@@ -147,7 +167,7 @@ class ProductResource extends Resource
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                Tables\Actions\DeleteBulkAction::make(),
+                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
