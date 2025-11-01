@@ -24,14 +24,14 @@ class ProductCategoryResource extends Resource
 
     protected static ?string $navigationGroup = 'Manajemen Menu';
 
-
-    public static function getElequentQuery(): Builder
+    public static function getEloquentQuery(): Builder
     {
         $user = Auth::user();
 
-        if($user->role === 'admin') {
+        if ($user->role === 'admin') {
             return parent::getEloquentQuery();
         }
+
         return parent::getEloquentQuery()->where('user_id', $user->id);
     }
 
@@ -43,7 +43,7 @@ class ProductCategoryResource extends Resource
                     ->label('Toko')
                     ->relationship('user', 'name')
                     ->required()
-                    ->hidden(fn()=>Auth::user()->role === 'store'),
+                    ->hidden(fn() => Auth::user()->role === 'store'),
                 Forms\Components\TextInput::make('name')
                     ->label('Nama Kategori')
                     ->required(),
@@ -59,17 +59,17 @@ class ProductCategoryResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Nama Toko')
-                    ->hidden(fn()=>Auth::user()->role === 'store'),
+                    ->hidden(fn() => Auth::user()->role === 'store'),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nama Kategori'),
                 Tables\Columns\ImageColumn::make('icon')
-                    ->label('Ikon Kategori'),
+                    ->label('Ikon Kategori')
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('user')
                     ->relationship('user', 'name')
                     ->label('Toko')
-                    ->hidden(fn()=>Auth::user()->role === 'store'),
+                    ->hidden(fn() => Auth::user()->role === 'store'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
