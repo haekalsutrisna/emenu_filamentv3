@@ -27,10 +27,10 @@ class SubscriptionResource extends Resource
                 Forms\Components\Select::make('user_id')
                     ->options(User::all()->pluck('name', 'id')->toArray())
                     ->required()
-                    ->hidden(fn()=> Auth::user()->hasRole('store')),   
+                    ->hidden(fn()=> Auth::user()->role === 'store'),   
                 Forms\Components\Toogle::make('is_active')
                     ->required()
-                    ->hidden(fn()=> Auth::user()->hasRole('store')),  
+                    ->hidden(fn()=> Auth::user()->role === 'store'),  
                 Forms\Components\Repeater::make('subscriptionPayment')
                     ->relationship()
                     ->schema([
@@ -47,7 +47,7 @@ class SubscriptionResource extends Resource
                             ->required()
                             ->label('Payment Status')
                             ->columnSpanFull()
-                            ->hidden(fn()=> Auth::user()->hasRole('store')),
+                            ->hidden(fn()=> Auth::user()->role === 'store'),
 
                     ]) 
                     ->columnSpanFull()
