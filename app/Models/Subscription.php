@@ -23,6 +23,6 @@ class Subscription extends Model
 
     public function subscriptionPayment()
     {
-        return $this->hasMany(subscriptionPayment::class, 'subscription_id');
+        return $this->hasOne(subscriptionPayment::class);
     }
 }
