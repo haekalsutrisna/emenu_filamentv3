@@ -12,21 +12,19 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
-use Filament\Tables\Columns\ImageColumn;
 use Illuminate\Support\Facades\Auth;
-
 
 class UserResource extends Resource
 {
     protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-o-user';
 
     protected static ?string $navigationLabel = 'Manajemen User';
 
     public static function canViewAny(): bool
     {
-        return Auth::user()->role=='admin';
+        return Auth::user()->role === 'admin';
     }
 
     public static function form(Form $form): Form
@@ -36,32 +34,32 @@ class UserResource extends Resource
                 Forms\Components\FileUpload::make('logo')
                     ->label('Logo Toko')
                     ->image()
-                    ->required(), 
+                    ->required(),
                 Forms\Components\TextInput::make('name')
                     ->label('Nama Toko')
                     ->required(),
                 Forms\Components\TextInput::make('username')
-                    ->label('Username')
-                    ->hint('Minimal 5 Karakter, tidak boleh ada spasi')
+                    ->label('username')
+                    ->hint('Minimal 5 karakter, tidak boleh ada spasi')
                     ->minLength(5)
-                    ->unique(User::class, 'username')
-                    ->required(),
+                    ->required()
+                    ->unique(ignoreRecord: true),
                 Forms\Components\TextInput::make('email')
                     ->label('Email')
                     ->email()
-                    ->required(),
+                    ->required()
+                    ->unique(ignoreRecord: true),
                 Forms\Components\TextInput::make('password')
                     ->label('Password')
                     ->password()
                     ->required(),
                 Forms\Components\Select::make('role')
+                    ->label('Peran')
                     ->options([
                         'admin' => 'Admin',
-                        'store' => 'Toko',
+                        'store' => 'Toko'
                     ])
                     ->required(),
-
-                //
             ]);
     }
 
@@ -69,12 +67,19 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\ImageColumn::make('logo'),
-                Tables\Columns\TextColumn::make('name'),
-                Tables\Columns\TextColumn::make('username'),
-                Tables\Columns\TextColumn::make('email'),
-                Tables\Columns\TextColumn::make('role'),
-                Tables\Columns\TextColumn::make('created_at')->dateTime(),
+                Tables\Columns\ImageColumn::make('logo')
+                    ->label('Logo Toko'),
+                Tables\Columns\TextColumn::make('name')
+                    ->label('Nama Toko'),
+                Tables\Columns\TextColumn::make('username')
+                    ->label('Username'),
+                Tables\Columns\TextColumn::make('email')
+                    ->label('Email'),
+                Tables\Columns\TextColumn::make('role')
+                    ->label('Peran'),
+                Tables\Columns\TextColumn::make('created_at')
+                    ->dateTime()
+                    ->label('Tanggal Mendaftar'),
             ])
             ->filters([
                 //
@@ -106,6 +111,4 @@ class UserResource extends Resource
             'edit' => Pages\EditUser::route('/{record}/edit'),
         ];
     }
-
-
 }
