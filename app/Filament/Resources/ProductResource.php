@@ -35,6 +35,24 @@ class ProductResource extends Resource
         return parent::getEloquentQuery()->where('user_id', $user->id);
     }
 
+    
+    public static function canCreate(): bool
+    {
+        if (Auth::user()->role === 'admin') {
+            return true;
+        }
+
+        $subcription = Subscription::where('user_id', Auth::user()->id)
+            ->where('end_date', '>', now())
+            ->where('is_active', true)
+            ->latest()
+            ->first();
+
+        $countProduct = Product::where('user_id', Auth::user()->id)->count();
+
+        return !($countProduct >= 5 && !$subcription);
+    }
+
     public static function form(Form $form): Form
     {
         return $form

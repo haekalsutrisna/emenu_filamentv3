@@ -12,7 +12,26 @@ class ListProducts extends ListRecords
 
     protected function getHeaderActions(): array
     {
+        if (Auth::user()->role === 'admin') {
+            return [
+                Actions\CreateAction::make(),
+            ];
+        }
+
+        $subcription = Subscription::where('user_id', Auth::user()->id)
+            ->where('end_date', '>', now())
+            ->where('is_active', true)
+            ->latest()
+            ->first();
+
+        $countProduct = Product::where('user_id', Auth::user()->id)->count();
+
         return [
+            Actions\Action::make('alert')
+                ->label('Produk Kamu Melebihi Batas Penggunaan Gratis, Silahkan Berlangganan')
+                ->color('danger')
+                ->icon('heroicon-s-exclamation-triangle')
+                ->visible(!$subcription && $countProduct >= 5),
             Actions\CreateAction::make(),
         ];
     }
