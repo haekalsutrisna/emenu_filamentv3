@@ -13,6 +13,7 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User;
 
 class SubscriptionResource extends Resource
 {
@@ -35,10 +36,11 @@ class SubscriptionResource extends Resource
         return $form
             ->schema([
                 Forms\Components\Select::make('user_id')
+                    ->label('Toko')
                     ->options(User::all()->pluck('name', 'id')->toArray())
                     ->required()
                     ->hidden(fn()=> Auth::user()->role === 'store'),   
-                Forms\Components\Toogle::make('is_active')
+                Forms\Components\Toggle::make('is_active')
                     ->required()
                     ->hidden(fn()=> Auth::user()->role === 'store'),  
                 Forms\Components\Repeater::make('subscriptionPayment')
