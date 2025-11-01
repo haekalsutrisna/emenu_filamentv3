@@ -44,6 +44,7 @@ class TransactionResource extends Resource
                 Forms\Components\TextInput::make('name')
                     ->label('Nama Customer')
                     ->required(),
+                
                 Forms\Components\TextInput::make('table_number')
                     ->label('Nomer Meja')
                     ->required(),
@@ -110,6 +111,8 @@ class TransactionResource extends Resource
                     ->label('Kode Transaksi'),
                 Tables\Columns\TextColumn::make('name')
                     ->label('Nama Customer'),
+                Tables\Columns\TextColumn::make('phone_number')
+                    ->label('Nomor HP Customer'),
                 Tables\Columns\TextColumn::make('table_number')
                     ->label('Nomor Meja'),
                 Tables\Columns\TextColumn::make('payment_method')
