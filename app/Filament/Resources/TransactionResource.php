@@ -4,18 +4,18 @@ namespace App\Filament\Resources;
 
 use App\Filament\Resources\TransactionResource\Pages;
 use App\Filament\Resources\TransactionResource\RelationManagers;
-use App\Models\Transaction;
 use App\Models\Product;
+use App\Models\Transaction;
 use Filament\Forms;
 use Filament\Forms\Form;
+use Filament\Forms\Get;
+use Filament\Forms\Set;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Illuminate\Support\Facades\Auth;
-use Filament\Forms\Get;
-use Filament\Forms\Set;
 
 class TransactionResource extends Resource
 {
@@ -25,6 +25,16 @@ class TransactionResource extends Resource
 
     protected static ?string $navigationLabel = 'Manajemen Transaksi';
 
+    public static function getEloquentQuery(): Builder
+    {
+        $user = Auth::user();
+
+        if ($user->role === 'admin') {
+            return parent::getEloquentQuery();
+        }
+
+        return parent::getEloquentQuery()->where('user_id', $user->id);
+    }
 
     public static function form(Form $form): Form
     {
@@ -35,59 +45,58 @@ class TransactionResource extends Resource
                     ->relationship('user', 'name')
                     ->required()
                     ->reactive()
-                    ->hidden(fn()=>auth()->user()->role === 'store'),
+                    ->hidden(fn() => Auth::user()->role === 'store'),
                 Forms\Components\TextInput::make('code')
-                    ->label('Kode transaksi')
-                    ->default(fn()=> 'TRX-'. mt_rand(1000,9999))
+                    ->label('Kode Transaksi')
+                    ->default(fn(): string => 'TRX-' . mt_rand(10000, 99999))
                     ->readOnly()
                     ->required(),
                 Forms\Components\TextInput::make('name')
                     ->label('Nama Customer')
                     ->required(),
                 Forms\Components\TextInput::make('phone_number')
-                    ->label('Nomor HP Customer')
-                    ->required(),                
+                    ->label('Nomer HP Customer')
+                    ->required(),
                 Forms\Components\TextInput::make('table_number')
                     ->label('Nomer Meja')
                     ->required(),
                 Forms\Components\Select::make('payment_method')
                     ->label('Metode Pembayaran')
-                    ->options(['cash'=>'Tunai','midtrans'=>'Midtrans'])
+                    ->options([
+                        'cash' => 'Tunai',
+                        'midtrans' => 'Midtrans'
+                    ])
                     ->required(),
                 Forms\Components\Select::make('status')
                     ->label('Status Pembayaran')
-                    ->options(['pending'=>'Tertunda','success'=>'Berhasil','failed'=>'Gagal'])
+                    ->options([
+                        'pending' => 'Tertunda',
+                        'success' => 'Berhasil',
+                        'failed' => 'Gagal'
+                    ])
                     ->required(),
                 Forms\Components\Repeater::make('transactionDetails')
-                    ->relationship() // biarkan kosong jika relasi sudah di model
+                    ->relationship()
                     ->schema([
                         Forms\Components\Select::make('product_id')
-                            ->relationship('product','name')
+                            ->relationship('product', 'name')
                             ->options(function (callable $get) {
-                                // Jika ingin ambil semua produk:
                                 if (Auth::user()->role === 'admin') {
                                     return Product::all()->mapWithKeys(function ($product) {
-                                        return [
-                                            $product->id => $product->name . ' (Rp ' . number_format($product->price) . ')'
-                                        ];
+                                        return [$product->id => "$product->name (Rp " . number_format($product->price) . ")"];
                                     });
                                 }
-                                return Product::all()->mapWithKeys(function ($product) {
-                                    return [
-                                        $product->id => $product->name . ' (Rp ' . number_format($product->price) . ')'
-                                    ];
+                                return Product::where('user_id', Auth::user()->id)->get()->mapWithKeys(function ($product) {
+                                    return [$product->id => "$product->name (Rp " . number_format($product->price) . ")"];
                                 });
-  
                             })
                             ->required(),
                         Forms\Components\TextInput::make('quantity')
-                            ->label('Kuantitas')
-                            ->numeric()
                             ->required()
+                            ->numeric()
                             ->minValue(1)
                             ->default(1),
-                        Forms\Components\TextInput::make('note')
-                            ->label('Note'),
+                        Forms\Components\TextInput::make('note'),
                     ])->columnSpanFull()
                     ->live()
                     ->afterStateUpdated(function (Get $get, Set $set) {
@@ -97,9 +106,7 @@ class TransactionResource extends Resource
                 Forms\Components\TextInput::make('total_price')
                     ->required()
                     ->readOnly(),
-                    
             ]);
-                
     }
 
     public static function table(Table $table): Table
@@ -108,7 +115,7 @@ class TransactionResource extends Resource
             ->columns([
                 Tables\Columns\TextColumn::make('user.name')
                     ->label('Nama Toko')
-                    ->hidden(fn()=>Auth::user()->role === 'store'),
+                    ->hidden(fn() => Auth::user()->role === 'store'),
                 Tables\Columns\TextColumn::make('code')
                     ->label('Kode Transaksi'),
                 Tables\Columns\TextColumn::make('name')
@@ -121,7 +128,7 @@ class TransactionResource extends Resource
                     ->label('Metode Pembayaran'),
                 Tables\Columns\TextColumn::make('total_price')
                     ->label('Total Pembayaran')
-                    ->formatStateUsing(function ($state) {
+                    ->formatStateUsing(function (string $state) {
                         return 'Rp ' . number_format($state);
                     }),
                 Tables\Columns\TextColumn::make('status')
@@ -129,13 +136,12 @@ class TransactionResource extends Resource
                 Tables\Columns\TextColumn::make('created_at')
                     ->label('Tanggal Transaksi')
                     ->dateTime(),
-
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('user')
-                ->relationship('user', 'name')
-                ->label('Toko')
-                ->hidden(fn()=>Auth::user()->role === 'store'),
+                    ->relationship('user', 'name')
+                    ->label('Toko')
+                    ->hidden(fn() => Auth::user()->role === 'store'),
             ])
             ->actions([
                 Tables\Actions\ViewAction::make(),
@@ -169,10 +175,10 @@ class TransactionResource extends Resource
     {
         $selectedProducts = collect($get('transactionDetails'))->filter(fn($item) => !empty($item['product_id']) && !empty($item['quantity']));
 
-        $prices = Product::find($selectedProducts->pluck('product_id')->toArray())->pluck('price', 'id');
+        $prices = Product::find($selectedProducts->pluck('product_id'))->pluck('price', 'id');
 
-        $total = $selectedProducts->reduce(function ($carry, $item) use ($prices) {
-            return $carry + ($prices[$item['product_id']] * $item['quantity']);
+        $total = $selectedProducts->reduce(function ($total, $product) use ($prices) {
+            return $total + ($prices[$product['product_id']] * $product['quantity']);
         }, 0);
 
         $set('total_price', (string) $total);
