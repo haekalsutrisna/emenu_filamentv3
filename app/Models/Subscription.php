@@ -16,6 +16,16 @@ class Subscription extends Model
         'plan',
     ];
 
+    public static function boot()
+    {
+        parent::boot();
+
+        static::creating(function($model){
+            $model->user_id = Auth::user()->id;
+            $model->end_date =now()->addDays(30);
+        });
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class);
