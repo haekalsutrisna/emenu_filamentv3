@@ -202,4 +202,5 @@
 
         </div>
       </div>
+      @include('includes.navigation')
 @endsection
