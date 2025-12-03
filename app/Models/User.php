@@ -49,6 +49,17 @@ class User extends Authenticatable
         ];
     }
 
+    public static function boot(){
+
+        parent::boot();
+
+        if (!Auth::check()) {
+            static::creating(function ($model) {
+                $model->role = 'store';
+            });
+        }
+    }
+
     public function productCategories()
     {
         return $this->hasMany(ProductCategory::class);
