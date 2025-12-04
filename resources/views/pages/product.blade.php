@@ -37,7 +37,7 @@
             <div id="Ingredients">
                 <h2 class="font-[500] mb-3">Ingredients used</h2>
                 <div class="grid grid-cols-2 gap-3">
-                    @foreach ($product->productIngredients as $ingredient)
+                    @foreach ($product->productIngredients ?? [] as $ingredient)
                     <div class="flex items-center gap-2">
                         <img src="{{asset('assets/images/icons/ic_check.svg')}}" alt="icon" class="w-5 h-5">
                         <span class="text-sm text-gray-600">{{$ingredient->name}}</span>
@@ -148,7 +148,7 @@
                         Menu Price
                     </p>
                     <p class="font-[600] text-[18px]">
-                        Rp {{numbeformat($product->price)}}
+                        Rp {{number_format($product->price)}}
                     </p>
                 </div>
 

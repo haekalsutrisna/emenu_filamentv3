@@ -110,14 +110,14 @@ class ProductResource extends Resource
                 Forms\Components\Toggle::make('is_popular')
                     ->label('Populer Menu')
                     ->required(),
-                // Forms\Components\Repeater::make('productIngredients')
-                //     ->label('Bahan Baku Menu')
-                //     ->relationship('productIngredients')
-                //     ->schema([
-                //         Forms\Components\TextInput::make('name')
-                //             ->label('Nama Bahan')
-                //             ->required(),
-                //     ])->columnSpanFull()
+                Forms\Components\Repeater::make('productIngredients')
+                    ->label('Bahan Baku Menu')
+                    ->relationship('productIngredients')
+                    ->schema([
+                        Forms\Components\TextInput::make('name')
+                            ->label('Nama Bahan')
+                            ->required(),
+                    ])->columnSpanFull()
             ]);
     }
 
