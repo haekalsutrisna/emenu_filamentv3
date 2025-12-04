@@ -37,38 +37,13 @@
             <div id="Ingredients">
                 <h2 class="font-[500] mb-3">Ingredients used</h2>
                 <div class="grid grid-cols-2 gap-3">
+                    @foreach ($product->productIngredients as $ingredient)
                     <div class="flex items-center gap-2">
-                        <img src="assets/images/icons/ic_check.svg" alt="icon" class="w-5 h-5">
-                        <span class="text-sm text-gray-600">Ramen noodles</span>
+                        <img src="{{asset('assets/images/icons/ic_check.svg')}}" alt="icon" class="w-5 h-5">
+                        <span class="text-sm text-gray-600">{{$ingredient->name}}</span>
                     </div>
-                    <div class="flex items-center gap-2">
-                        <img src="assets/images/icons/ic_check.svg" alt="icon" class="w-5 h-5">
-                        <span class="text-sm text-gray-600">Ramen noodles</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <img src="assets/images/icons/ic_check.svg" alt="icon" class="w-5 h-5">
-                        <span class="text-sm text-gray-600">Ramen noodles</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <img src="assets/images/icons/ic_check.svg" alt="icon" class="w-5 h-5">
-                        <span class="text-sm text-gray-600">Ramen noodles</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <img src="assets/images/icons/ic_check.svg" alt="icon" class="w-5 h-5">
-                        <span class="text-sm text-gray-600">Ramen noodles</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <img src="assets/images/icons/ic_check.svg" alt="icon" class="w-5 h-5">
-                        <span class="text-sm text-gray-600">Ramen noodles</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <img src="assets/images/icons/ic_check.svg" alt="icon" class="w-5 h-5">
-                        <span class="text-sm text-gray-600">Ramen noodles</span>
-                    </div>
-                    <div class="flex items-center gap-2">
-                        <img src="assets/images/icons/ic_check.svg" alt="icon" class="w-5 h-5">
-                        <span class="text-sm text-gray-600">Ramen noodles</span>
-                    </div>
+                    @endforeach
+                    
                 </div>
             </div>
             <div id="Reviews">
@@ -83,11 +58,11 @@
                                     <h3 class="text-[#353535] font-[500] text-[14px]">Muhamad Rafli</h3>
 
                                     <div class="flex items-center gap-1">
-                                        <img src="assets/images/icons/ic_star.svg" alt="rating" class="w-4 h-4">
-                                        <img src="assets/images/icons/ic_star.svg" alt="rating" class="w-4 h-4">
-                                        <img src="assets/images/icons/ic_star.svg" alt="rating" class="w-4 h-4">
-                                        <img src="assets/images/icons/ic_star.svg" alt="rating" class="w-4 h-4">
-                                        <img src="assets/images/icons/ic_star.svg" alt="rating" class="w-4 h-4">
+                                        <img src="{{asset('assets/images/icons/ic_star.svg')}}" alt="rating" class="w-4 h-4">
+                                        <img src="{{asset('assets/images/icons/ic_star.svg')}}" alt="rating" class="w-4 h-4">
+                                        <img src="{{asset('assets/images/icons/ic_star.svg')}}" alt="rating" class="w-4 h-4">
+                                        <img src="{{asset('assets/images/icons/ic_star.svg')}}" alt="rating" class="w-4 h-4">
+                                        <img src="{{asset('assets/images/icons/ic_star.svg')}}" alt="rating" class="w-4 h-4">
                                     </div>
                                 </div>
 
@@ -105,11 +80,11 @@
                                     <h3 class="text-[#353535] font-[500] text-[14px]">Muhamad Rafli</h3>
 
                                     <div class="flex items-center gap-1">
-                                        <img src="assets/images/icons/ic_star.svg" alt="rating" class="w-4 h-4">
-                                        <img src="assets/images/icons/ic_star.svg" alt="rating" class="w-4 h-4">
-                                        <img src="assets/images/icons/ic_star.svg" alt="rating" class="w-4 h-4">
-                                        <img src="assets/images/icons/ic_star.svg" alt="rating" class="w-4 h-4">
-                                        <img src="assets/images/icons/ic_star.svg" alt="rating" class="w-4 h-4">
+                                        <img src="{{asset('assets/images/icons/ic_star.svg')}}" alt="rating" class="w-4 h-4">
+                                        <img src="{{asset('assets/images/icons/ic_star.svg')}}" alt="rating" class="w-4 h-4">
+                                        <img src="{{asset('assets/images/icons/ic_star.svg')}}" alt="rating" class="w-4 h-4">
+                                        <img src="{{asset('assets/images/icons/ic_star.svg')}}" alt="rating" class="w-4 h-4">
+                                        <img src="{{asset('assets/images/icons/ic_star.svg')}}" alt="rating" class="w-4 h-4">
                                     </div>
                                 </div>
 
@@ -126,11 +101,11 @@
                                     <h3 class="text-[#353535] font-[500] text-[14px]">Muhamad Rafli</h3>
 
                                     <div class="flex items-center gap-1">
-                                        <img src="assets/images/icons/ic_star.svg" alt="rating" class="w-4 h-4">
-                                        <img src="assets/images/icons/ic_star.svg" alt="rating" class="w-4 h-4">
-                                        <img src="assets/images/icons/ic_star.svg" alt="rating" class="w-4 h-4">
-                                        <img src="assets/images/icons/ic_star.svg" alt="rating" class="w-4 h-4">
-                                        <img src="assets/images/icons/ic_star.svg" alt="rating" class="w-4 h-4">
+                                        <img src="{{asset('assets/images/icons/ic_star.svg')}}" alt="rating" class="w-4 h-4">
+                                        <img src="{{asset('assets/images/icons/ic_star.svg')}}" alt="rating" class="w-4 h-4">
+                                        <img src="{{asset('assets/images/icons/ic_star.svg')}}" alt="rating" class="w-4 h-4">
+                                        <img src="{{asset('assets/images/icons/ic_star.svg')}}" alt="rating" class="w-4 h-4">
+                                        <img src="{{asset('assets/images/icons/ic_star.svg')}}" alt="rating" class="w-4 h-4">
                                     </div>
                                 </div>
 
@@ -147,11 +122,11 @@
                                     <h3 class="text-[#353535] font-[500] text-[14px]">Muhamad Rafli</h3>
 
                                     <div class="flex items-center gap-1">
-                                        <img src="assets/images/icons/ic_star.svg" alt="rating" class="w-4 h-4">
-                                        <img src="assets/images/icons/ic_star.svg" alt="rating" class="w-4 h-4">
-                                        <img src="assets/images/icons/ic_star.svg" alt="rating" class="w-4 h-4">
-                                        <img src="assets/images/icons/ic_star.svg" alt="rating" class="w-4 h-4">
-                                        <img src="assets/images/icons/ic_star.svg" alt="rating" class="w-4 h-4">
+                                        <img src="{{asset('assets/images/icons/ic_star.svg')}}" alt="rating" class="w-4 h-4">
+                                        <img src="{{asset('assets/images/icons/ic_star.svg')}}" alt="rating" class="w-4 h-4">
+                                        <img src="{{asset('assets/images/icons/ic_star.svg')}}" alt="rating" class="w-4 h-4">
+                                        <img src="{{asset('assets/images/icons/ic_star.svg')}}" alt="rating" class="w-4 h-4">
+                                        <img src="{{asset('assets/images/icons/ic_star.svg')}}" alt="rating" class="w-4 h-4">
                                     </div>
                                 </div>
 
@@ -173,7 +148,7 @@
                         Menu Price
                     </p>
                     <p class="font-[600] text-[18px]">
-                        Rp 40.0000
+                        Rp {{numbeformat($product->price)}}
                     </p>
                 </div>
 
