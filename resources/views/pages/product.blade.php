@@ -3,7 +3,7 @@
 @section('content')
 <div id="TopNavAbsolute"
             class="absolute top-0 left-0 right-0 flex items-center justify-between w-full px-5 py-3 z-10 bg-gradient-to-b from-black/80 to-transparent">
-            <a href="{{route('index')}}"
+            <a href="{{ route('index', ['username' => $store->username]) }}"
                 class="w-12 h-12 flex items-center justify-center shrink-0 rounded-full overflow-hidden bg-white/10">
                 <img src="{{ asset('assets/images/icons/Arrow - Left.svg')}}" class="w-8 h-8" alt="icon">
             </a>
@@ -15,11 +15,11 @@
         </div>
 
         <div id="Image" class="relative w-full overflow-x-hidden -mb-[38px]">
-            <img src="assets/images/photos/Delicious Ramen Bowl.png" alt="" class="w-full h-[500px] object-cover">
+        <img src="{{asset('storage/'. $product->image)}}" alt="" class="w-full h-[500px] object-cover">
 
             <div class="absolute bottom-20 right-5 flex items-center gap-1  bg-white/10 px-[8px] py-[4px] rounded-full">
-                <img src="assets/images/icons/ic_star.svg" alt="rating" class="w-4 h-4">
-                <p class="text-white text-sm">4.8</p>
+                <img src="{{asset('assets/images/icons/ic_star.svg')}}" alt="rating" class="w-4 h-4">
+                <p class="text-white text-sm">{{$product->rating}}</p>
             </div>
         </div>
 
@@ -27,11 +27,11 @@
         <div class="flex flex-col w-full px-5 py-5 gap-5 bg-white rounded-t-[20px] shadow-sm mt-[-20px] z-10">
             <div id="Title">
                 <p class="text-[#F3AF00] font-[400] text-[12px]">
-                    Ramen
+                    {{$product->productCategory->name}}
                 </p>
-                <h1 class="text-[26px] font-semibold">Miso Ramen</h1>
+                <h1 class="text-[26px] font-semibold">{{$product->name}}</h1>
                 <p class="text-[#606060] font-[400] text-[14px]">
-                    Rich miso-based broth with a savory flavor, topped with corn, minced meat, and green onions.
+                    {{$product->description}}
                 </p>
             </div>
             <div id="Ingredients">
