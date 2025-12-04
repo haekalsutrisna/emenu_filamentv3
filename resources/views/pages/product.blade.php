@@ -3,14 +3,14 @@
 @section('content')
 <div id="TopNavAbsolute"
             class="absolute top-0 left-0 right-0 flex items-center justify-between w-full px-5 py-3 z-10 bg-gradient-to-b from-black/80 to-transparent">
-            <a href="index.html"
+            <a href="{{route('index')}}"
                 class="w-12 h-12 flex items-center justify-center shrink-0 rounded-full overflow-hidden bg-white/10">
-                <img src="assets/images/icons/ArrowLeft.svg" class="w-8 h-8" alt="icon">
+                <img src="{{ asset('assets/images/icons/Arrow - Left.svg')}}" class="w-8 h-8" alt="icon">
             </a>
             <p class="font-semibold text-white">Details</p>
             <button
                 class="w-12 h-12 flex items-center justify-center shrink-0 rounded-full overflow-hidden bg-white/10">
-                <img src="assets/images/icons/Thumbs Up.svg" class="w-[26px] h-[26px]" alt="">
+                <img src="{{asset('assets/images/icons/Thumbs Up.svg')}}" class="w-[26px] h-[26px]" alt="">
             </button>
         </div>
 
