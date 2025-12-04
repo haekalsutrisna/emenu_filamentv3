@@ -107,7 +107,7 @@ class ProductResource extends Resource
                     ->label('Rating Menu')
                     ->numeric()
                     ->required(),
-                Forms\Components\Toggle::make('is_popular')
+                Forms\Components\ToggleColumn::make('is_popular')
                     ->label('Populer Menu')
                     ->required(),
                 Forms\Components\Repeater::make('productIngredients')
