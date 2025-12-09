@@ -1,4 +1,4 @@
-# 🍴 Menu Online
+# 🍴 Digital Menu
 
 Aplikasi **Menu Online** adalah sistem digital untuk menampilkan dan mengelola menu restoran secara daring.  
 Pengunjung dapat melihat daftar menu, deskripsi, harga, dan melakukan pemesanan langsung dari perangkat mereka.
